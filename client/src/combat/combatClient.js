@@ -4,14 +4,15 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.m
 // Generic 06 light profile is used, NOT an invented class weapon.
 export const RULES=Object.freeze({breachSeconds:4,breachMultiplier:1.2,lightHP:1,lightStagger:.5,
  // Every undocumented balance choice is deliberately named PLACEHOLDER.
- PLACEHOLDER_constructHP:200,PLACEHOLDER_playerHP:100,PLACEHOLDER_baseDamage:20,
+ PLACEHOLDER_constructHP:400,PLACEHOLDER_playerHP:100,PLACEHOLDER_baseDamage:20,
  PLACEHOLDER_maxStagger:100,PLACEHOLDER_constructDamage:15,
  PLACEHOLDER_attackRange:3,PLACEHOLDER_executeRange:3,PLACEHOLDER_aimDot:.72,
  PLACEHOLDER_recovery:.45,PLACEHOLDER_hitDelay:.12,PLACEHOLDER_swingSeconds:.32,
  PLACEHOLDER_aggroRange:8,PLACEHOLDER_meleeRange:2.6,PLACEHOLDER_windup:1,
  PLACEHOLDER_enemySwing:.25,PLACEHOLDER_enemyRecovery:1.3,PLACEHOLDER_respawn:4,
  PLACEHOLDER_spawnX:0,PLACEHOLDER_spawnY:.16,PLACEHOLDER_spawnZ:3.8,
- PLACEHOLDER_hitFlash:.16,PLACEHOLDER_executeSeconds:.65});
+ PLACEHOLDER_hitFlash:.16,PLACEHOLDER_executeSeconds:.65,PLACEHOLDER_aggroDelay:.5,
+ PLACEHOLDER_enemyVerticalReach:1.8,PLACEHOLDER_enemyArcDot:.5,PLACEHOLDER_bodyRadius:.55,PLACEHOLDER_bodyAimHeight:1.25});
 const P=RULES;
 export class CombatClient {
  constructor(scene,camera,player,rig,world,grapple){Object.assign(this,{scene,camera,player,rig,world,grapple});
@@ -27,8 +28,8 @@ export class CombatClient {
  }
  resetEnemy(){this.hp=P.PLACEHOLDER_constructHP;this.stagger=0;this.state='IDLE';this.timer=0;this.breach=0;this.flash=0;this.executed=false;this.root.position.set(P.PLACEHOLDER_spawnX,P.PLACEHOLDER_spawnY,P.PLACEHOLDER_spawnZ);this.root.rotation.set(0,0,0);this.root.scale.setScalar(1);this.arm.rotation.set(0,0,0);}
  reset(){this.resetEnemy();this.playerHP=P.PLACEHOLDER_playerHP;this.dead=false;this.recovery=0;this.pending=-1;this.swing=0;this.lastDamage=0;this.hits=0;this.message='Training Construct ready';}
- distance(){return this.camera.position.distanceTo(this.root.position.clone().add(new THREE.Vector3(0,1.25,0)));}
- aimed(range){if(this.distance()>range)return false;const to=this.root.position.clone().add(new THREE.Vector3(0,1.25,0)).sub(this.camera.position);const dist=to.length();const dir=to.normalize();if(this.camera.getWorldDirection(new THREE.Vector3()).dot(dir)<P.PLACEHOLDER_aimDot)return false;const ray=new THREE.Raycaster(this.camera.position,dir,0,Math.max(0,dist-.55));return ray.intersectObjects(this.world.solids,false).length===0;}
+ distance(){return this.camera.position.distanceTo(this.root.position.clone().add(new THREE.Vector3(0,P.PLACEHOLDER_bodyAimHeight,0)));}
+ aimed(range){if(this.distance()>range)return false;const to=this.root.position.clone().add(new THREE.Vector3(0,P.PLACEHOLDER_bodyAimHeight,0)).sub(this.camera.position);const dist=to.length();const dir=to.normalize();if(this.camera.getWorldDirection(new THREE.Vector3()).dot(dir)<P.PLACEHOLDER_aimDot)return false;const ray=new THREE.Raycaster(this.camera.position,dir,0,Math.max(0,dist-P.PLACEHOLDER_bodyRadius));return ray.intersectObjects(this.world.solids,false).length===0;}
  attack(){if(this.dead||this.recovery>0)return false;this.recovery=P.PLACEHOLDER_recovery;this.swing=P.PLACEHOLDER_swingSeconds;this.pending=P.PLACEHOLDER_hitDelay;return true;}
  hit(){if(this.state==='DEAD'||!this.aimed(P.PLACEHOLDER_attackRange))return false;const breached=this.state==='BREACHED';this.lastDamage=P.PLACEHOLDER_baseDamage*P.lightHP*(breached?P.breachMultiplier:1);this.hp=Math.max(0,this.hp-this.lastDamage);this.hits++;this.flash=P.PLACEHOLDER_hitFlash;this.message='Hit '+this.lastDamage+(breached?' / Breach +20%':'');
  if(this.hp<=0){this.kill(false);return true;}if(!breached){this.stagger=Math.min(P.PLACEHOLDER_maxStagger,this.stagger+P.PLACEHOLDER_baseDamage*P.lightStagger);if(this.stagger>=P.PLACEHOLDER_maxStagger){this.state='BREACHED';this.breach=P.breachSeconds;this.message='BREACH — E EXECUTE';}}return true;}
@@ -38,11 +39,11 @@ export class CombatClient {
  update(dt){this.recovery=Math.max(0,this.recovery-dt);this.swing=Math.max(0,this.swing-dt);this.flash=Math.max(0,this.flash-dt);
  if(this.pending>=0){this.pending-=dt;if(this.pending<=0){this.pending=-1;if(!this.dead)this.hit();}}
  if(this.state==='DEAD'){this.timer-=dt;this.root.rotation.z=THREE.MathUtils.damp(this.root.rotation.z,-1.5,8,dt);this.root.scale.setScalar(this.executed?Math.max(.05,this.timer/P.PLACEHOLDER_respawn):1);if(this.timer<=0)this.resetEnemy();}
- else if(!this.dead){const delta=this.camera.position.clone().sub(this.root.position);this.root.rotation.y=Math.atan2(delta.x,delta.z);const near=this.distance()<=P.PLACEHOLDER_aggroRange;
+ else if(!this.dead){const delta=this.camera.position.clone().sub(this.root.position);if(this.state==='IDLE'||this.state==='AGGRO')this.root.rotation.y=Math.atan2(delta.x,delta.z);const near=this.distance()<=P.PLACEHOLDER_aggroRange;
  if(this.state==='BREACHED'){this.breach=Math.max(0,this.breach-dt);if(this.breach===0){this.stagger=0;this.state='AGGRO';this.timer=P.PLACEHOLDER_enemyRecovery;}}
- else if(this.state==='IDLE'&&near){this.state='AGGRO';this.timer=.5;}
+ else if(this.state==='IDLE'&&near){this.state='AGGRO';this.timer=P.PLACEHOLDER_aggroDelay;}
  else if(this.state==='AGGRO'){this.timer-=dt;if(!near)this.state='IDLE';else if(this.timer<=0&&this.distance()<=P.PLACEHOLDER_meleeRange){this.state='WINDUP';this.timer=P.PLACEHOLDER_windup;}}
- else if(this.state==='WINDUP'){this.timer-=dt;if(this.timer<=0){this.state='ATTACK';this.timer=P.PLACEHOLDER_enemySwing;const forward=new THREE.Vector3(Math.sin(this.root.rotation.y),0,Math.cos(this.root.rotation.y));const flat=delta.clone();flat.y=0;const vertical=Math.abs(this.player.position.y-this.root.position.y)<1.8;if(vertical&&this.distance()<=P.PLACEHOLDER_meleeRange&&flat.normalize().dot(forward)>.5&&this.aimEnemyClear())this.hurt();}}
+ else if(this.state==='WINDUP'){this.timer-=dt;if(this.timer<=0){this.state='ATTACK';this.timer=P.PLACEHOLDER_enemySwing;const forward=new THREE.Vector3(Math.sin(this.root.rotation.y),0,Math.cos(this.root.rotation.y));const flat=delta.clone();flat.y=0;const vertical=Math.abs(this.player.position.y-this.root.position.y)<P.PLACEHOLDER_enemyVerticalReach;if(vertical&&this.distance()<=P.PLACEHOLDER_meleeRange&&flat.normalize().dot(forward)>P.PLACEHOLDER_enemyArcDot&&this.aimEnemyClear())this.hurt();}}
  else if(this.state==='ATTACK'){this.timer-=dt;if(this.timer<=0){this.state='AGGRO';this.timer=P.PLACEHOLDER_enemyRecovery;}}
  }
  this.root.rotation.x=this.state==='BREACHED'?.6:0;this.arm.rotation.x=this.state==='WINDUP'?-2.5:this.state==='ATTACK'?1.4:0;
