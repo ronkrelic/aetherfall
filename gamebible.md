@@ -9,5 +9,7 @@ Design by Relic, built with Ember. This is the source of truth for the game. Fed
 5. [Starting Zone: Cairn-Reach](gamebible/05-starting-zone-cairn-reach.md) - the town and the "Echoes in the Amber" opening questline (levels 1-10)
 6. [Technical Architecture](gamebible/06-technical-architecture.md) - client/server stack, subsystems, database schema, folder structure, phased roadmap
 7. [Weapons, Armor & Bestiary](gamebible/07-weapons-armor-bestiary.md) - signature weapons, armor sets, enemy bestiary
+8. [Dungeons & Delves](gamebible/08-dungeons-and-delves.md) - The Sunken Observatory, a 5-player delve for levels 10–15; rooms, Orrery Warden Vaelis, loot and rewards
+9. [UI & HUD Design](gamebible/09-ui-hud-design.md) - diegetic anchors, screen layout, HUD modules and states, accessibility
 
 Concept art lives in [concept-art/](concept-art/).
