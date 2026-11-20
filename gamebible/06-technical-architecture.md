@@ -161,4 +161,3 @@ The goal of this roadmap is a playable vertical slice covering Cairn-Reach, the 
 - Populate Cairn-Reach with key NPCs (Quartermaster Mira Vance, Archivist Oakhaven), a crafting anvil for socketed gear, and the Echoes in the Amber quest tracker.
 - Add a starter Wayfinder Sanctum instance where players can place a hearth, chest, and workbench in first-person.
 - Script the Harmonic Convergence public event at the Singing Pillars, spawning The Fractured Colossus (Amber Sentinel boss with breakable glowing leg joints).
-- 
