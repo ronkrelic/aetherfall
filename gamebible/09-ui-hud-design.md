@@ -118,4 +118,3 @@ To keep immersion high in first-person, your equipped hands and tools mirror key
 - **Colorblind Presets:** Adjustable palettes for Health / Aether / Stamina and Stagger / Breach bars (including High-Contrast Gold/Cyan mode).
 - **Motion & Viewmodel Comfort:** Independent sliders for Field of View (75°–110°), Viewmodel Bob Intensity (0%–100%), and Glider Edge-Vignette to prevent motion sickness during rapid grappling.
 - **Modular Scale & Opacity:** Every HUD cluster (Vitals, Target Bar, Hotbar, Minimap, Combat Log) can be resized (70%–130%) or toggled independently.
-- 
