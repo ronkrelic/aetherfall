@@ -27,7 +27,7 @@ export class CombatClient {
  document.addEventListener('pointerlockchange',()=>{if(!player.locked){this.pending=-1;this.swing=0;}});
  }
  resetEnemy(){this.hp=P.PLACEHOLDER_constructHP;this.stagger=0;this.state='IDLE';this.timer=0;this.breach=0;this.flash=0;this.executed=false;this.root.position.set(P.PLACEHOLDER_spawnX,P.PLACEHOLDER_spawnY,P.PLACEHOLDER_spawnZ);this.root.rotation.set(0,0,0);this.root.scale.setScalar(1);this.arm.rotation.set(0,0,0);}
- reset(){this.resetEnemy();this.playerHP=P.PLACEHOLDER_playerHP;this.dead=false;this.recovery=0;this.pending=-1;this.swing=0;this.lastDamage=0;this.hits=0;this.message='Training Construct ready';}
+ reset(){this.rig.combatSwing=0;this.resetEnemy();this.playerHP=P.PLACEHOLDER_playerHP;this.dead=false;this.recovery=0;this.pending=-1;this.swing=0;this.lastDamage=0;this.hits=0;this.message='Training Construct ready';}
  distance(){return this.camera.position.distanceTo(this.root.position.clone().add(new THREE.Vector3(0,P.PLACEHOLDER_bodyAimHeight,0)));}
  aimed(range){if(this.distance()>range)return false;const to=this.root.position.clone().add(new THREE.Vector3(0,P.PLACEHOLDER_bodyAimHeight,0)).sub(this.camera.position);const dist=to.length();const dir=to.normalize();if(this.camera.getWorldDirection(new THREE.Vector3()).dot(dir)<P.PLACEHOLDER_aimDot)return false;const ray=new THREE.Raycaster(this.camera.position,dir,0,Math.max(0,dist-P.PLACEHOLDER_bodyRadius));return ray.intersectObjects(this.world.solids,false).length===0;}
  attack(){if(this.dead||this.recovery>0)return false;this.recovery=P.PLACEHOLDER_recovery;this.swing=P.PLACEHOLDER_swingSeconds;this.pending=P.PLACEHOLDER_hitDelay;return true;}
