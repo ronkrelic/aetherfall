@@ -14,6 +14,21 @@ Every weapon in Aetherfall features distinct Light/Heavy attack animations, dedi
 
 - **Light Attack:** Fast horizontal sweeps (1.0x HP / 0.8x Stagger).
 - **Heavy Attack (Hold):** Overhead bell-strike that rings out in a 4m shockwave (0.7x HP / 3.0x Stagger).
+
+This catalog compiles the Signature Weapons, Class & Tier Armor Sets, and Enemy Bestiary for Aetherfall: The Sunken Tiers, designed around first-person viewmodel readability, Active Stagger System (A.S.S.) breakpoints, and modular socket tuning.
+
+## 1. Signature Weapons & First-Person Armaments
+
+Every weapon in Aetherfall features distinct Light/Heavy attack animations, dedicated Stagger multipliers, and two Core Sockets for elemental or mechanical tuning.
+
+### Spire-Breaker Bulwark & Chime-Maul (Vanguard – Heavy Melee / Shield)
+
+**First-Person Feel:** A towering bronze-and-amber tower shield held in the left hand with an etched translucent sight-slit, paired with a resonant stone-headed maul in the right.
+
+**Combat Profile:**
+
+- **Light Attack:** Fast horizontal sweeps (1.0x HP / 0.8x Stagger).
+- **Heavy Attack (Hold):** Overhead bell-strike that rings out in a 4m shockwave (0.7x HP / 3.0x Stagger).
 - **Signature Passive – Harmonic Parry:** Landing a Perfect Block (Right-Click within 0.25s of impact) reflects 15% Stagger damage back onto the attacker and restores 15 Stamina.
 
 ### Prism-Crowned Spire Staff (Arcanist – Ranged Focus / Beam)
@@ -94,4 +109,3 @@ Each enemy entry specifies Tier Habitat, Attack Telegraphs, Stagger/Breach Weakn
 - **Behavior & Telegraphs:** A towering stone-and-amber colossus wielding a seismic warhammer. Telegraphs ground-slam shockwaves with glowing orange runes racing down its arms (2.0s windup)—requiring players to jump or Geyser-Flask over the expanding ring.
 - **Tactical Counter:** Features three independent Stagger Points (left knee, right knee, and chest core). Shattering both leg joints forces the Sentinel to kneel, exposing its chest core for full group Breach damage.
 - **Notable Drops:** Resonant Amber Heart, Ancient Logic-Core, Spire-Breaker Schematics.
-- 
