@@ -9,7 +9,7 @@ export class FPController {
  look(){this.camera.rotation.set(this.pitch,this.yaw,0,'YXZ');}
  reset(){this.position.set(0,.17,7);this.velocity.set(0,0,0);this.jumpQueued=false;}
  sync(){this.camera.position.copy(this.position).add(new THREE.Vector3(0,1.65,0));}
- overlaps(b){const p=this.position,r=.32;return p.x+r>b.min.x&&p.x-r<b.max.x&&p.y+1.8>b.min.y+.001&&p.y<b.max.y-.001&&p.z+r>b.min.z&&p.z-r<b.max.z;}
+ overlaps(b){const p=this.position,r=.32;return p.x+r>b.min.x&&p.x-r<b.max.x&&p.y+1.8>b.min.y&&p.y<b.max.y&&p.z+r>b.min.z&&p.z-r<b.max.z;}
  update(dt,grappling=false){const k=this.keys,p=this.position,v=this.velocity,ground=this.grounded;
  const move=new THREE.Vector3(Number(k.has('KeyD'))-Number(k.has('KeyA')),0,Number(k.has('KeyS'))-Number(k.has('KeyW')));if(move.lengthSq())move.normalize().applyAxisAngle(new THREE.Vector3(0,1,0),this.yaw);
  const speed=k.has('ShiftLeft')||k.has('ShiftRight')?10:6;
