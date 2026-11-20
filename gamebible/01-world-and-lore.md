@@ -1,5 +1,7 @@
 # AETHERFALL: The Sunken Tiers - World & Lore
 
+Here is a complete, cohesive blueprint for a first-person 3D open-world MMO RPG—built around vertical exploration, tactile first-person tools, dynamic world events, and a mystery where the world itself is waking up.
+
 ## Core Pitch
 
 Set inside The Terraces of Aetherfall, a colossal stepped world where ancient sky-cities once tumbled into vast, sunlit canyons and glowing subterranean basins, players explore from a tactile first-person perspective. Every hand, tool, spell, and shield is physically visible in front of you - allowing you to grapple across chasms, vent pressurized steam to launch upward, read physical compass-glyphs on your wrist, and fight alongside dozens of other players in real time.
